@@ -1,0 +1,11 @@
+<Project>
+	<PropertyGroup>
+		<CodeAnalysisRuleset>../../RuleSetLibrary.ruleset</CodeAnalysisRuleset>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>IDE0002</NoWarn>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+		<AdditionalFiles Include="../../stylecop.json" />
+	</ItemGroup>
+</Project>
