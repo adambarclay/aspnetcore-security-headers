@@ -13,17 +13,33 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders
 		/// <exception cref="ArgumentNullException"><paramref name="applicationBuilder"/> is <see langword="null"/>.</exception>
 		public static IApplicationBuilder UseSecurityHeaders(this IApplicationBuilder applicationBuilder)
 		{
+			return applicationBuilder.UseSecurityHeaders(o => { });
+		}
+
+		/// <summary>Adds the security headers to the ASP.NET Core pipeline.</summary>
+		/// <param name="applicationBuilder">The ASP.NET Core <see cref="IApplicationBuilder"/>.</param>
+		/// <param name="securityHeaderPolicyBuilder">Builds the security header policy configuration.</param>
+		/// <returns>The same ASP.NET Core <see cref="IApplicationBuilder"/>.</returns>
+		/// <exception cref="ArgumentNullException"><paramref name="applicationBuilder"/> or <paramref name="securityHeaderPolicyBuilder"/> is <see langword="null"/>.</exception>
+		public static IApplicationBuilder UseSecurityHeaders(
+			this IApplicationBuilder applicationBuilder,
+			Action<SecurityHeaderPolicyBuilder> securityHeaderPolicyBuilder)
+		{
 			if (applicationBuilder == null)
 			{
 				throw new ArgumentNullException(nameof(applicationBuilder));
 			}
 
-			var securityHeaderPolicy = new SecurityHeaderPolicy(
-				"default-src 'self'",
-				"accelerometer 'none';ambient-light-sensor 'none';autoplay 'none';battery 'none';camera 'none';display-capture 'none';document-domain 'none';encrypted-media 'none';fullscreen 'none';geolocation 'none';gyroscope 'none';layout-animations 'none';legacy-image-formats 'none';magnetometer 'none';microphone 'none';midi 'none';oversized-images 'none';payment 'none';picture-in-picture 'none';publickey-credentials 'none';sync-xhr 'none';unsized-media 'none';usb 'none';xr-spatial-tracking 'none';",
-				"deny",
-				"strict-origin-when-cross-origin",
-				"max-age=31536000;includeSubdomains");
+			if (securityHeaderPolicyBuilder == null)
+			{
+				throw new ArgumentNullException(nameof(securityHeaderPolicyBuilder));
+			}
+
+			var policyBuilder = new SecurityHeaderPolicyBuilder();
+
+			securityHeaderPolicyBuilder.Invoke(policyBuilder);
+
+			var securityHeaderPolicy = policyBuilder.Build();
 
 			applicationBuilder.Use(
 				async (context, next) =>
