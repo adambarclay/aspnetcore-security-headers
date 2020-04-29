@@ -1,5 +1,7 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Xunit;
 
 namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderMiddleware
@@ -9,18 +11,21 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderMiddl
 		[Fact]
 		public static async Task Always()
 		{
-			var nextRan = false;
+			bool nextRan;
 
-			await TestHarness.Test(
-				app => app.UseSecurityHeaders()
-					.Use(
-						async (context, next) =>
-						{
-							nextRan = true;
+			Func<HttpContext, Func<Task>, Task> middleware = async (context, next) =>
+			{
+				nextRan = true;
 
-							await next.Invoke();
-						}));
+				await next.Invoke();
+			};
 
+			nextRan = false;
+			await TestHarness.Test(app => app.UseSecurityHeaders().Use(middleware));
+			Assert.True(nextRan);
+
+			nextRan = false;
+			await TestHarness.Test(app => app.UseSecurityHeaders(o => { }).Use(middleware));
 			Assert.True(nextRan);
 		}
 	}

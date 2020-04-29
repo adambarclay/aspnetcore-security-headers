@@ -11,6 +11,7 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderMiddl
 			var app = new ApplicationBuilder(null);
 
 			Assert.Same(app, app.UseSecurityHeaders());
+			Assert.Same(app, app.UseSecurityHeaders(o => { }));
 		}
 	}
 }
