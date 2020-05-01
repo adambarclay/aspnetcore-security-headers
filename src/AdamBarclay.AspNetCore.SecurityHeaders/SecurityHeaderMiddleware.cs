@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 
 namespace AdamBarclay.AspNetCore.SecurityHeaders
 {
@@ -18,39 +19,42 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders
 
 		/// <summary>Adds the security headers to the ASP.NET Core pipeline.</summary>
 		/// <param name="applicationBuilder">The ASP.NET Core <see cref="IApplicationBuilder"/>.</param>
-		/// <param name="securityHeaderPolicyBuilder">Builds the security header policy configuration.</param>
+		/// <param name="configure">Builds the security header policy configuration.</param>
 		/// <returns>The same ASP.NET Core <see cref="IApplicationBuilder"/>.</returns>
-		/// <exception cref="ArgumentNullException"><paramref name="applicationBuilder"/> or <paramref name="securityHeaderPolicyBuilder"/> is <see langword="null"/>.</exception>
+		/// <exception cref="ArgumentNullException"><paramref name="applicationBuilder"/> or <paramref name="configure"/> is <see langword="null"/>.</exception>
 		public static IApplicationBuilder UseSecurityHeaders(
 			this IApplicationBuilder applicationBuilder,
-			Action<SecurityHeaderPolicyBuilder> securityHeaderPolicyBuilder)
+			Action<SecurityHeaderPolicyBuilder> configure)
 		{
 			if (applicationBuilder == null)
 			{
 				throw new ArgumentNullException(nameof(applicationBuilder));
 			}
 
-			if (securityHeaderPolicyBuilder == null)
+			if (configure == null)
 			{
-				throw new ArgumentNullException(nameof(securityHeaderPolicyBuilder));
+				throw new ArgumentNullException(nameof(configure));
 			}
 
-			var policyBuilder = new SecurityHeaderPolicyBuilder();
+			var securityHeaderPolicyBuilder = new SecurityHeaderPolicyBuilder();
 
-			securityHeaderPolicyBuilder.Invoke(policyBuilder);
+			configure.Invoke(securityHeaderPolicyBuilder);
 
-			var securityHeaderPolicy = policyBuilder.Build();
+			var securityHeaderPolicy = securityHeaderPolicyBuilder.Build();
+
+			Func<object, Task> onStartingCallback = state =>
+			{
+				var context = (HttpContext)state;
+
+				securityHeaderPolicy.WriteHeaders(context.Response.Headers, context.Request.IsHttps);
+
+				return Task.CompletedTask;
+			};
 
 			applicationBuilder.Use(
 				async (context, next) =>
 				{
-					context.Response.OnStarting(
-						() =>
-						{
-							securityHeaderPolicy.WriteHeaders(context.Response.Headers, context.Request.IsHttps);
-
-							return Task.CompletedTask;
-						});
+					context.Response.OnStarting(onStartingCallback, context);
 
 					await next.Invoke();
 				});
