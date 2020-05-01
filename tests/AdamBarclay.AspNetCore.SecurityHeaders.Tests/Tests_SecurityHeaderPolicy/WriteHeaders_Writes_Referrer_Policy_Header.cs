@@ -24,7 +24,8 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 		[Fact]
 		public static async Task With_Value_No_Referrer_When_Configured()
 		{
-			var headers = await TestHarness.Test(app => app.UseSecurityHeaders(o => o.ReferrerPolicy.NoReferrer()));
+			var headers =
+				await TestHarness.Test(app => app.UseSecurityHeaders(o => o.ReferrerPolicy(x => x.NoReferrer())));
 
 			Assert.Equal("no-referrer", headers["referrer-policy"]);
 		}
@@ -33,7 +34,7 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 		public static async Task With_Value_No_Referrer_When_Downgrade_When_Configured()
 		{
 			var headers = await TestHarness.Test(
-				app => app.UseSecurityHeaders(o => o.ReferrerPolicy.NoReferrerWhenDowngrade()));
+				app => app.UseSecurityHeaders(o => o.ReferrerPolicy(x => x.NoReferrerWhenDowngrade())));
 
 			Assert.Equal("no-referrer-when-downgrade", headers["referrer-policy"]);
 		}
@@ -41,7 +42,7 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 		[Fact]
 		public static async Task With_Value_Origin_When_Configured()
 		{
-			var headers = await TestHarness.Test(app => app.UseSecurityHeaders(o => o.ReferrerPolicy.Origin()));
+			var headers = await TestHarness.Test(app => app.UseSecurityHeaders(o => o.ReferrerPolicy(x => x.Origin())));
 
 			Assert.Equal("origin", headers["referrer-policy"]);
 		}
@@ -50,7 +51,7 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 		public static async Task With_Value_Origin_When_Cross_Origin_When_Configured()
 		{
 			var headers = await TestHarness.Test(
-				app => app.UseSecurityHeaders(o => o.ReferrerPolicy.OriginWhenCrossOrigin()));
+				app => app.UseSecurityHeaders(o => o.ReferrerPolicy(x => x.OriginWhenCrossOrigin())));
 
 			Assert.Equal("origin-when-cross-origin", headers["referrer-policy"]);
 		}
@@ -58,7 +59,8 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 		[Fact]
 		public static async Task With_Value_Same_Origin_When_Configured()
 		{
-			var headers = await TestHarness.Test(app => app.UseSecurityHeaders(o => o.ReferrerPolicy.SameOrigin()));
+			var headers =
+				await TestHarness.Test(app => app.UseSecurityHeaders(o => o.ReferrerPolicy(x => x.SameOrigin())));
 
 			Assert.Equal("same-origin", headers["referrer-policy"]);
 		}
@@ -66,7 +68,8 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 		[Fact]
 		public static async Task With_Value_Strict_Origin_When_Configured()
 		{
-			var headers = await TestHarness.Test(app => app.UseSecurityHeaders(o => o.ReferrerPolicy.StrictOrigin()));
+			var headers = await TestHarness.Test(
+				app => app.UseSecurityHeaders(o => o.ReferrerPolicy(x => x.StrictOrigin())));
 
 			Assert.Equal("strict-origin", headers["referrer-policy"]);
 		}
@@ -75,7 +78,7 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 		public static async Task With_Value_Strict_Origin_When_Cross_Origin_When_Configured()
 		{
 			var headers = await TestHarness.Test(
-				app => app.UseSecurityHeaders(o => o.ReferrerPolicy.StrictOriginWhenCrossOrigin()));
+				app => app.UseSecurityHeaders(o => o.ReferrerPolicy(x => x.StrictOriginWhenCrossOrigin())));
 
 			Assert.Equal("strict-origin-when-cross-origin", headers["referrer-policy"]);
 		}
@@ -83,7 +86,8 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 		[Fact]
 		public static async Task With_Value_Unsafe_Url_When_Configured()
 		{
-			var headers = await TestHarness.Test(app => app.UseSecurityHeaders(o => o.ReferrerPolicy.UnsafeUrl()));
+			var headers =
+				await TestHarness.Test(app => app.UseSecurityHeaders(o => o.ReferrerPolicy(x => x.UnsafeUrl())));
 
 			Assert.Equal("unsafe-url", headers["referrer-policy"]);
 		}
