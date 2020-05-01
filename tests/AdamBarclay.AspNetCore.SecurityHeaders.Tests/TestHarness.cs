@@ -28,8 +28,8 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests
 
 			contextMock.Setup(o => o.Request.IsHttps).Returns(useHttps);
 			contextMock.Setup(o => o.Response.Headers).Returns(headers);
-			contextMock.Setup(o => o.Response.OnStarting(It.IsAny<Func<Task>>()))
-				.Callback<Func<Task>>(func => onStarting = func);
+			contextMock.Setup(o => o.Response.OnStarting(It.IsAny<Func<object, Task>>(), It.IsAny<object>()))
+				.Callback<Func<object, Task>, object>((callback, state) => onStarting = () => callback(state));
 
 			var app = new ApplicationBuilder(null);
 
