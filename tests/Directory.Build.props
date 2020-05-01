@@ -1,11 +1,11 @@
 <Project>
 	<PropertyGroup>
-		<CodeAnalysisRuleset>../../RuleSetTests.ruleset</CodeAnalysisRuleset>
+		<CodeAnalysisRuleset>../../build/RuleSetTests.ruleset</CodeAnalysisRuleset>
 		<IsPackable>false</IsPackable>
 		<NoWarn>IDE0002</NoWarn>
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
-		<AdditionalFiles Include="../../stylecop.json"/>
+		<AdditionalFiles Include="../../build/stylecop.json"/>
 	</ItemGroup>
 </Project>
