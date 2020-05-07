@@ -7,6 +7,13 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 	public static class When_Configure_Is_Null
 	{
 		[Fact]
+		public static async Task FeaturePolicy_Throws_ArgumentNullException()
+		{
+			await Assert.ThrowsAnyAsync<ArgumentNullException>(
+				async () => await TestHarness.Test(app => app.UseSecurityHeaders(o => o.FeaturePolicy(null!))));
+		}
+
+		[Fact]
 		public static async Task FrameOptions_Throws_ArgumentNullException()
 		{
 			await Assert.ThrowsAnyAsync<ArgumentNullException>(
