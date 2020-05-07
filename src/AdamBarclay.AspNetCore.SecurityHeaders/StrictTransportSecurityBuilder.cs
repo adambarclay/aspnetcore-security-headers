@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AdamBarclay.AspNetCore.SecurityHeaders
 {
-	/// <summary>Configures the strict-transport-security header value.</summary>
+	/// <summary>Configures the "strict-transport-security" header value.</summary>
 	public sealed class StrictTransportSecurityBuilder
 	{
 		private bool includeSubdomains;
@@ -45,8 +45,8 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders
 			return this;
 		}
 
-		/// <summary>Configure the maximum age.</summary>
-		/// <param name="maxAgeTimeSpan">A <see cref="TimeSpan"/> representing the maximum age.</param>
+		/// <summary>Configure the maximum amount of time the policy will apply.</summary>
+		/// <param name="maxAgeTimeSpan">A <see cref="TimeSpan"/> representing the maximum amount of time the policy will apply.</param>
 		/// <returns>The <see cref="SecurityHeaderPolicyBuilder"/>.</returns>
 		public StrictTransportSecurityBuilder MaxAge(TimeSpan maxAgeTimeSpan)
 		{
