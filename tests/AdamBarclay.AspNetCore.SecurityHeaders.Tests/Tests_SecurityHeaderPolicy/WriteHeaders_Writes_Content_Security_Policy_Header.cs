@@ -10,7 +10,9 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 		{
 			var headers = await TestHarness.Test(app => app.UseSecurityHeaders(o => { }));
 
-			Assert.Equal("default-src 'self'", headers["content-security-policy"]);
+			Assert.Equal(
+				"default-src 'self';frame-ancestors 'none';object-src 'none'",
+				headers["content-security-policy"]);
 		}
 
 		[Fact]
@@ -18,7 +20,9 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 		{
 			var headers = await TestHarness.Test(app => app.UseSecurityHeaders());
 
-			Assert.Equal("default-src 'self'", headers["content-security-policy"]);
+			Assert.Equal(
+				"default-src 'self';frame-ancestors 'none';object-src 'none'",
+				headers["content-security-policy"]);
 		}
 	}
 }

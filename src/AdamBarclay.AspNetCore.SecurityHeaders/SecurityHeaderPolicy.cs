@@ -5,58 +5,41 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders
 {
 	internal sealed class SecurityHeaderPolicy
 	{
-		private readonly string contentSecurityPolicy;
-		private readonly string frameOptions;
-		private readonly string referrerPolicy;
-		private readonly string strictTransportSecurity;
+		private readonly (string Name, string Value)[] policies;
+		private readonly (string Name, string Value)[] secureOnlyPolicies;
 
 		internal SecurityHeaderPolicy(
-			string contentSecurityPolicy,
-			string frameOptions,
-			string referrerPolicy,
-			string strictTransportSecurity)
+			(string Name, string Value)[] policies,
+			(string Name, string Value)[] secureOnlyPolicies)
 		{
-			Debug.Assert(contentSecurityPolicy != null);
-			Debug.Assert(contentSecurityPolicy.Length > 0);
-			Debug.Assert(frameOptions != null);
-			Debug.Assert(frameOptions.Length > 0);
-			Debug.Assert(referrerPolicy != null);
-			Debug.Assert(referrerPolicy.Length > 0);
-			Debug.Assert(strictTransportSecurity != null);
-			Debug.Assert(strictTransportSecurity.Length > 0);
+			Debug.Assert(policies != null);
+			Debug.Assert(secureOnlyPolicies != null);
 
-			this.contentSecurityPolicy = contentSecurityPolicy;
-			this.frameOptions = frameOptions;
-			this.referrerPolicy = referrerPolicy;
-			this.strictTransportSecurity = strictTransportSecurity;
+			this.policies = policies;
+			this.secureOnlyPolicies = secureOnlyPolicies;
 		}
 
 		internal void WriteHeaders(IHeaderDictionary headers, bool isHttps)
 		{
 			Debug.Assert(headers != null);
 
-			SecurityHeaderPolicy.SetHeader(headers, "content-security-policy", this.contentSecurityPolicy);
-			SecurityHeaderPolicy.SetHeader(headers, "x-content-type-options", "nosniff");
-			SecurityHeaderPolicy.SetHeader(headers, "x-frame-options", this.frameOptions);
-			SecurityHeaderPolicy.SetHeader(headers, "referrer-policy", this.referrerPolicy);
+			foreach ((var name, var value) in this.policies)
+			{
+				if (!headers.ContainsKey(name))
+				{
+					headers[name] = value;
+				}
+			}
 
 			if (isHttps)
 			{
-				SecurityHeaderPolicy.SetHeader(headers, "strict-transport-security", this.strictTransportSecurity);
-			}
-		}
-
-		private static void SetHeader(IHeaderDictionary headers, string name, string value)
-		{
-			Debug.Assert(headers != null);
-			Debug.Assert(name != null);
-			Debug.Assert(name.Length > 0);
-			Debug.Assert(value != null);
-			Debug.Assert(value.Length > 0);
-
-			if (!headers.ContainsKey(name))
-			{
-				headers[name] = value;
+				foreach ((var name, var value) in this.secureOnlyPolicies)
+				{
+					if (!headers.ContainsKey(name))
+					{
+						headers[name] = value;
+					}
+				}
 			}
 		}
 	}
