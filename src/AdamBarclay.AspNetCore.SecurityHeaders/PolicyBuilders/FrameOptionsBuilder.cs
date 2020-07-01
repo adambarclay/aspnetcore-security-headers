@@ -1,4 +1,4 @@
-namespace AdamBarclay.AspNetCore.SecurityHeaders
+namespace AdamBarclay.AspNetCore.SecurityHeaders.PolicyBuilders
 {
 	/// <summary>Configures the "x-frame-options" header value.</summary>
 	public sealed class FrameOptionsBuilder

@@ -1,4 +1,5 @@
 using System;
+using AdamBarclay.AspNetCore.SecurityHeaders.PolicyBuilders;
 using Xunit;
 
 namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_StrictTransportSecurityBuilder
