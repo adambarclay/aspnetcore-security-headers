@@ -6,22 +6,18 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders
 	internal sealed class SecurityHeaderPolicy
 	{
 		private readonly string contentSecurityPolicy;
-		private readonly string featurePolicy;
 		private readonly string frameOptions;
 		private readonly string referrerPolicy;
 		private readonly string strictTransportSecurity;
 
 		internal SecurityHeaderPolicy(
 			string contentSecurityPolicy,
-			string featurePolicy,
 			string frameOptions,
 			string referrerPolicy,
 			string strictTransportSecurity)
 		{
 			Debug.Assert(contentSecurityPolicy != null);
 			Debug.Assert(contentSecurityPolicy.Length > 0);
-			Debug.Assert(featurePolicy != null);
-			Debug.Assert(featurePolicy.Length > 0);
 			Debug.Assert(frameOptions != null);
 			Debug.Assert(frameOptions.Length > 0);
 			Debug.Assert(referrerPolicy != null);
@@ -30,7 +26,6 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders
 			Debug.Assert(strictTransportSecurity.Length > 0);
 
 			this.contentSecurityPolicy = contentSecurityPolicy;
-			this.featurePolicy = featurePolicy;
 			this.frameOptions = frameOptions;
 			this.referrerPolicy = referrerPolicy;
 			this.strictTransportSecurity = strictTransportSecurity;
@@ -42,7 +37,6 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders
 
 			SecurityHeaderPolicy.SetHeader(headers, "content-security-policy", this.contentSecurityPolicy);
 			SecurityHeaderPolicy.SetHeader(headers, "x-content-type-options", "nosniff");
-			SecurityHeaderPolicy.SetHeader(headers, "feature-policy", this.featurePolicy);
 			SecurityHeaderPolicy.SetHeader(headers, "x-frame-options", this.frameOptions);
 			SecurityHeaderPolicy.SetHeader(headers, "referrer-policy", this.referrerPolicy);
 

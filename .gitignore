@@ -7,3 +7,4 @@ artifacts/
 
 *.user
 .DS_Store
+._*

@@ -2,7 +2,7 @@ using System;
 using System.Globalization;
 using System.Text;
 
-namespace AdamBarclay.AspNetCore.SecurityHeaders
+namespace AdamBarclay.AspNetCore.SecurityHeaders.PolicyBuilders
 {
 	/// <summary>Configures the "strict-transport-security" header value.</summary>
 	public sealed class StrictTransportSecurityBuilder
