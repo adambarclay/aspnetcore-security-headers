@@ -3,68 +3,69 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.PolicyBuilders
 	/// <summary>Configures the "referrer-policy" header value.</summary>
 	public sealed class ReferrerPolicyBuilder
 	{
-		private const string NoReferrerValue = "no-referrer";
-		private const string NoReferrerWhenDowngradeValue = "no-referrer-when-downgrade";
-		private const string OriginValue = "origin";
-		private const string OriginWhenCrossOriginValue = "origin-when-cross-origin";
-		private const string SameOriginValue = "same-origin";
-		private const string StrictOriginValue = "strict-origin";
-		private const string StrictOriginWhenCrossOriginValue = "strict-origin-when-cross-origin";
-		private const string UnsafeUrlValue = "unsafe-url";
-
 		private string referrerPolicy;
 
 		internal ReferrerPolicyBuilder()
 		{
-			this.referrerPolicy = ReferrerPolicyBuilder.StrictOriginWhenCrossOriginValue;
+			this.Enabled = true;
+
+			this.referrerPolicy = string.Empty;
+		}
+
+		internal bool Enabled { get; private set; }
+
+		/// <summary>Disables the "referrer-policy" header.</summary>
+		public void Disable()
+		{
+			this.Enabled = false;
 		}
 
 		/// <summary>Configures the "referrer-policy" header to have the value "no-referrer".</summary>
 		public void NoReferrer()
 		{
-			this.referrerPolicy = ReferrerPolicyBuilder.NoReferrerValue;
+			this.referrerPolicy = "no-referrer";
 		}
 
 		/// <summary>Configures the "referrer-policy" header to have the value "no-referrer-when-downgrade".</summary>
 		public void NoReferrerWhenDowngrade()
 		{
-			this.referrerPolicy = ReferrerPolicyBuilder.NoReferrerWhenDowngradeValue;
+			this.referrerPolicy = "no-referrer-when-downgrade";
 		}
 
 		/// <summary>Configures the "referrer-policy" header to have the value "origin".</summary>
 		public void Origin()
 		{
-			this.referrerPolicy = ReferrerPolicyBuilder.OriginValue;
+			this.referrerPolicy = "origin";
 		}
 
 		/// <summary>Configures the "referrer-policy" header to have the value "origin-when-cross-origin".</summary>
 		public void OriginWhenCrossOrigin()
 		{
-			this.referrerPolicy = ReferrerPolicyBuilder.OriginWhenCrossOriginValue;
+			this.referrerPolicy = "origin-when-cross-origin";
 		}
 
 		/// <summary>Configures the "referrer-policy" header to have the value "same-origin".</summary>
 		public void SameOrigin()
 		{
-			this.referrerPolicy = ReferrerPolicyBuilder.SameOriginValue;
+			this.referrerPolicy = "same-origin";
 		}
 
 		/// <summary>Configures the "referrer-policy" header to have the value "strict-origin".</summary>
 		public void StrictOrigin()
 		{
-			this.referrerPolicy = ReferrerPolicyBuilder.StrictOriginValue;
+			this.referrerPolicy = "strict-origin";
 		}
 
 		/// <summary>Configures the "referrer-policy" header to have the value "strict-origin-when-cross-origin". This is the default.</summary>
 		public void StrictOriginWhenCrossOrigin()
 		{
-			this.referrerPolicy = ReferrerPolicyBuilder.StrictOriginWhenCrossOriginValue;
+			this.referrerPolicy = "strict-origin-when-cross-origin";
 		}
 
 		/// <summary>Configures the "referrer-policy" header to have the value "unsafe-url".</summary>
 		public void UnsafeUrl()
 		{
-			this.referrerPolicy = ReferrerPolicyBuilder.UnsafeUrlValue;
+			this.referrerPolicy = "unsafe-url";
 		}
 
 		internal string Build()

@@ -14,6 +14,15 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 		}
 
 		[Fact]
+		public static async Task When_The_Header_Is_Disabled()
+		{
+			var headers = await TestHarness.TestHttp(
+				app => app.UseSecurityHeaders(o => o.StrictTransportSecurity(x => x.Disable())));
+
+			Assert.Empty(headers["strict-transport-security"]);
+		}
+
+		[Fact]
 		public static async Task When_Using_Default_Configuration_And_The_Request_Is_Not_Https()
 		{
 			var headers = await TestHarness.TestHttp(app => app.UseSecurityHeaders());

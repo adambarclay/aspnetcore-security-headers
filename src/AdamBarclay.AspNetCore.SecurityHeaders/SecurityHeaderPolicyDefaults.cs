@@ -5,6 +5,16 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders
 {
 	internal static class SecurityHeaderPolicyDefaults
 	{
+		internal static ContentSecurityPolicyBuilder DefaultContentSecurityPolicy()
+		{
+			return new ContentSecurityPolicyBuilder();
+		}
+
+		internal static ContentTypeOptionsBuilder DefaultContentTypeOptions()
+		{
+			return new ContentTypeOptionsBuilder();
+		}
+
 		internal static FrameOptionsBuilder DefaultFrameOptions()
 		{
 			var frameOptionsBuilder = new FrameOptionsBuilder();

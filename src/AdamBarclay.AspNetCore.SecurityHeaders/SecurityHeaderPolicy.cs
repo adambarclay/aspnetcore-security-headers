@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using Microsoft.AspNetCore.Http;
 
 namespace AdamBarclay.AspNetCore.SecurityHeaders
@@ -19,26 +20,32 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders
 			this.secureOnlyPolicies = secureOnlyPolicies;
 		}
 
-		internal void WriteHeaders(IHeaderDictionary headers, bool isHttps)
+		internal void WriteHeaders(IHeaderDictionary headers, bool requestIsHttps)
 		{
 			Debug.Assert(headers != null);
 
-			foreach ((var name, var value) in this.policies)
+			SecurityHeaderPolicy.WriteHeaders(headers, this.policies);
+
+			if (requestIsHttps)
 			{
+				SecurityHeaderPolicy.WriteHeaders(headers, this.secureOnlyPolicies);
+			}
+		}
+
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		private static void WriteHeaders(IHeaderDictionary headers, (string Name, string Value)[] headerValues)
+		{
+			Debug.Assert(headers != null);
+			Debug.Assert(headerValues != null);
+
+			foreach ((var name, var value) in headerValues)
+			{
+				Debug.Assert(name != null);
+				Debug.Assert(value != null);
+
 				if (!headers.ContainsKey(name))
 				{
 					headers[name] = value;
-				}
-			}
-
-			if (isHttps)
-			{
-				foreach ((var name, var value) in this.secureOnlyPolicies)
-				{
-					if (!headers.ContainsKey(name))
-					{
-						headers[name] = value;
-					}
 				}
 			}
 		}

@@ -23,12 +23,28 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 		}
 
 		[Fact]
+		public static async Task With_IncludeSubdomains_And_Preload_When_Configured()
+		{
+			var maxAge = new Random().Next();
+
+			var headers = await TestHarness.Test(
+				app => app.UseSecurityHeaders(
+					o => o.StrictTransportSecurity(
+						x => x.MaxAge(TimeSpan.FromSeconds(maxAge)).IncludeSubdomains().Preload())));
+
+			Assert.Equal($"max-age={maxAge};includeSubdomains;preload", headers["strict-transport-security"]);
+		}
+
+		[Fact]
 		public static async Task With_IncludeSubdomains_When_Configured()
 		{
-			var headers = await TestHarness.Test(
-				app => app.UseSecurityHeaders(o => o.StrictTransportSecurity(x => x.IncludeSubdomains())));
+			var maxAge = new Random().Next();
 
-			Assert.Equal("max-age=31536000;includeSubdomains", headers["strict-transport-security"]);
+			var headers = await TestHarness.Test(
+				app => app.UseSecurityHeaders(
+					o => o.StrictTransportSecurity(x => x.MaxAge(TimeSpan.FromSeconds(maxAge)).IncludeSubdomains())));
+
+			Assert.Equal($"max-age={maxAge};includeSubdomains", headers["strict-transport-security"]);
 		}
 
 		[Fact]
@@ -40,54 +56,19 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 				app => app.UseSecurityHeaders(
 					o => o.StrictTransportSecurity(x => x.MaxAge(TimeSpan.FromSeconds(maxAge)))));
 
-			Assert.Equal("max-age=" + maxAge + ";includeSubdomains", headers["strict-transport-security"]);
+			Assert.Equal($"max-age={maxAge}", headers["strict-transport-security"]);
 		}
 
 		[Fact]
 		public static async Task With_Preload_And_Without_IncludeSubdomains_When_Configured()
 		{
+			var maxAge = new Random().Next();
+
 			var headers = await TestHarness.Test(
 				app => app.UseSecurityHeaders(
-					o => o.StrictTransportSecurity(x => x.Preload().DontIncludeSubdomains())));
+					o => o.StrictTransportSecurity(x => x.MaxAge(TimeSpan.FromSeconds(maxAge)).Preload())));
 
-			Assert.Equal("max-age=31536000;preload", headers["strict-transport-security"]);
-		}
-
-		[Fact]
-		public static async Task With_Preload_When_Configured()
-		{
-			var headers = await TestHarness.Test(
-				app => app.UseSecurityHeaders(o => o.StrictTransportSecurity(x => x.Preload())));
-
-			Assert.Equal("max-age=31536000;includeSubdomains;preload", headers["strict-transport-security"]);
-		}
-
-		[Fact]
-		public static async Task Without_IncludeSubdomains_When_Configured()
-		{
-			var headers = await TestHarness.Test(
-				app => app.UseSecurityHeaders(o => o.StrictTransportSecurity(x => x.DontIncludeSubdomains())));
-
-			Assert.Equal("max-age=31536000", headers["strict-transport-security"]);
-		}
-
-		[Fact]
-		public static async Task Without_Preload_And_Without_IncludeSubdomains_When_Configured()
-		{
-			var headers = await TestHarness.Test(
-				app => app.UseSecurityHeaders(
-					o => o.StrictTransportSecurity(x => x.DontPreload().DontIncludeSubdomains())));
-
-			Assert.Equal("max-age=31536000", headers["strict-transport-security"]);
-		}
-
-		[Fact]
-		public static async Task Without_Preload_When_Configured()
-		{
-			var headers = await TestHarness.Test(
-				app => app.UseSecurityHeaders(o => o.StrictTransportSecurity(x => x.DontPreload())));
-
-			Assert.Equal("max-age=31536000;includeSubdomains", headers["strict-transport-security"]);
+			Assert.Equal($"max-age={maxAge};preload", headers["strict-transport-security"]);
 		}
 	}
 }

@@ -32,8 +32,8 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 		[Fact]
 		public static async Task With_Value_Same_Origin_When_Configured()
 		{
-			var headers =
-				await TestHarness.Test(app => app.UseSecurityHeaders(o => o.FrameOptions(x => x.SameOrigin())));
+			var headers = await TestHarness.Test(
+				app => app.UseSecurityHeaders(o => o.FrameOptions(x => x.SameOrigin())));
 
 			Assert.Equal("sameorigin", headers["x-frame-options"]);
 		}

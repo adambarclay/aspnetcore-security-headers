@@ -13,55 +13,29 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.PolicyBuilders
 
 		internal StrictTransportSecurityBuilder()
 		{
-			this.maxAge = 31536000;
-			this.includeSubdomains = true;
-			this.preload = false;
-		}
+			this.Enabled = true;
 
-		/// <summary>Do not include subdomains.</summary>
-		/// <returns>The <see cref="SecurityHeaderPolicyBuilder"/>.</returns>
-		public StrictTransportSecurityBuilder DontIncludeSubdomains()
-		{
+			this.maxAge = 0;
 			this.includeSubdomains = false;
-
-			return this;
-		}
-
-		/// <summary>Do not use the HSTS preload service. See https://hstspreload.org for details.</summary>
-		/// <returns>The <see cref="SecurityHeaderPolicyBuilder"/>.</returns>
-		public StrictTransportSecurityBuilder DontPreload()
-		{
 			this.preload = false;
-
-			return this;
 		}
 
-		/// <summary>Include subdomains.</summary>
-		/// <returns>The <see cref="SecurityHeaderPolicyBuilder"/>.</returns>
-		public StrictTransportSecurityBuilder IncludeSubdomains()
-		{
-			this.includeSubdomains = true;
+		internal bool Enabled { get; private set; }
 
-			return this;
+		/// <summary>Disables the "strict-transport-security" header.</summary>
+		public void Disable()
+		{
+			this.Enabled = false;
 		}
 
 		/// <summary>Configure the maximum amount of time the policy will apply.</summary>
 		/// <param name="maxAgeTimeSpan">A <see cref="TimeSpan"/> representing the maximum amount of time the policy will apply.</param>
-		/// <returns>The <see cref="SecurityHeaderPolicyBuilder"/>.</returns>
-		public StrictTransportSecurityBuilder MaxAge(TimeSpan maxAgeTimeSpan)
+		/// <returns>The <see cref="StrictTransportSecurityOptionalBuilder"/>.</returns>
+		public StrictTransportSecurityOptionalBuilder MaxAge(TimeSpan maxAgeTimeSpan)
 		{
 			this.maxAge = (int)maxAgeTimeSpan.TotalSeconds;
 
-			return this;
-		}
-
-		/// <summary>Use the HSTS preload service. See https://hstspreload.org for details.</summary>
-		/// <returns>The <see cref="SecurityHeaderPolicyBuilder"/>.</returns>
-		public StrictTransportSecurityBuilder Preload()
-		{
-			this.preload = true;
-
-			return this;
+			return new StrictTransportSecurityOptionalBuilder(this);
 		}
 
 		internal string Build()
@@ -73,17 +47,60 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.PolicyBuilders
 
 			if (this.includeSubdomains)
 			{
-				stringBuilder.Append(";");
-				stringBuilder.Append("includeSubdomains");
+				stringBuilder.Append(";includeSubdomains");
 			}
 
 			if (this.preload)
 			{
-				stringBuilder.Append(";");
-				stringBuilder.Append("preload");
+				stringBuilder.Append(";preload");
 			}
 
 			return stringBuilder.ToString();
+		}
+
+		/// <summary>The builder for the optional "includeSubdomains" and "preload" parameters.</summary>
+		public sealed class StrictTransportSecurityOptionalBuilder
+		{
+			private readonly StrictTransportSecurityBuilder strictTransportSecurityBuilder;
+
+			internal StrictTransportSecurityOptionalBuilder(
+				StrictTransportSecurityBuilder strictTransportSecurityBuilder)
+			{
+				this.strictTransportSecurityBuilder = strictTransportSecurityBuilder;
+			}
+
+			/// <summary>Include subdomains.</summary>
+			/// <returns>The <see cref="StrictTransportSecurityOptionalPreloadBuilder"/>.</returns>
+			public StrictTransportSecurityOptionalPreloadBuilder IncludeSubdomains()
+			{
+				this.strictTransportSecurityBuilder.includeSubdomains = true;
+
+				return new StrictTransportSecurityOptionalPreloadBuilder(this.strictTransportSecurityBuilder);
+			}
+
+			/// <summary>Use the HSTS preload service. See https://hstspreload.org for details.</summary>
+			public void Preload()
+			{
+				this.strictTransportSecurityBuilder.preload = true;
+			}
+		}
+
+		/// <summary>The builder for the optional "preload" parameter.</summary>
+		public sealed class StrictTransportSecurityOptionalPreloadBuilder
+		{
+			private readonly StrictTransportSecurityBuilder strictTransportSecurityBuilder;
+
+			internal StrictTransportSecurityOptionalPreloadBuilder(
+				StrictTransportSecurityBuilder strictTransportSecurityBuilder)
+			{
+				this.strictTransportSecurityBuilder = strictTransportSecurityBuilder;
+			}
+
+			/// <summary>Use the HSTS preload service. See https://hstspreload.org for details.</summary>
+			public void Preload()
+			{
+				this.strictTransportSecurityBuilder.preload = true;
+			}
 		}
 	}
 }

@@ -24,8 +24,8 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 		[Fact]
 		public static async Task With_Value_No_Referrer_When_Configured()
 		{
-			var headers =
-				await TestHarness.Test(app => app.UseSecurityHeaders(o => o.ReferrerPolicy(x => x.NoReferrer())));
+			var headers = await TestHarness.Test(
+				app => app.UseSecurityHeaders(o => o.ReferrerPolicy(x => x.NoReferrer())));
 
 			Assert.Equal("no-referrer", headers["referrer-policy"]);
 		}
@@ -59,8 +59,8 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 		[Fact]
 		public static async Task With_Value_Same_Origin_When_Configured()
 		{
-			var headers =
-				await TestHarness.Test(app => app.UseSecurityHeaders(o => o.ReferrerPolicy(x => x.SameOrigin())));
+			var headers = await TestHarness.Test(
+				app => app.UseSecurityHeaders(o => o.ReferrerPolicy(x => x.SameOrigin())));
 
 			Assert.Equal("same-origin", headers["referrer-policy"]);
 		}
@@ -86,8 +86,8 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 		[Fact]
 		public static async Task With_Value_Unsafe_Url_When_Configured()
 		{
-			var headers =
-				await TestHarness.Test(app => app.UseSecurityHeaders(o => o.ReferrerPolicy(x => x.UnsafeUrl())));
+			var headers = await TestHarness.Test(
+				app => app.UseSecurityHeaders(o => o.ReferrerPolicy(x => x.UnsafeUrl())));
 
 			Assert.Equal("unsafe-url", headers["referrer-policy"]);
 		}
