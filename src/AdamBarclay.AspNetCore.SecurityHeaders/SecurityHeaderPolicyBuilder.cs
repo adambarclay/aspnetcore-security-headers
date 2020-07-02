@@ -7,15 +7,55 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders
 	/// <summary>The security header policy builder.</summary>
 	public sealed class SecurityHeaderPolicyBuilder
 	{
+		private ContentSecurityPolicyBuilder contentSecurityPolicyBuilder;
+		private ContentTypeOptionsBuilder contentTypeOptionsBuilder;
 		private FrameOptionsBuilder frameOptionsBuilder;
 		private ReferrerPolicyBuilder referrerPolicyBuilder;
 		private StrictTransportSecurityBuilder strictTransportSecurityBuilder;
 
 		internal SecurityHeaderPolicyBuilder()
 		{
+			this.contentSecurityPolicyBuilder = SecurityHeaderPolicyDefaults.DefaultContentSecurityPolicy();
+			this.contentTypeOptionsBuilder = SecurityHeaderPolicyDefaults.DefaultContentTypeOptions();
 			this.frameOptionsBuilder = SecurityHeaderPolicyDefaults.DefaultFrameOptions();
 			this.referrerPolicyBuilder = SecurityHeaderPolicyDefaults.DefaultReferrerPolicy();
 			this.strictTransportSecurityBuilder = SecurityHeaderPolicyDefaults.DefaultStrictTransportSecurity();
+		}
+
+		/// <summary>Configures the "content-security-policy" header value.</summary>
+		/// <param name="configure">The configuration action.</param>
+		/// <returns>The <see cref="SecurityHeaderPolicyBuilder"/>.</returns>
+		/// <exception cref="ArgumentNullException"><paramref name="configure"/> is <see langword="null"/>.</exception>
+		public SecurityHeaderPolicyBuilder ContentSecurityPolicy(Action<ContentSecurityPolicyBuilder> configure)
+		{
+			if (configure == null)
+			{
+				throw new ArgumentNullException(nameof(configure));
+			}
+
+			this.contentSecurityPolicyBuilder = new ContentSecurityPolicyBuilder();
+
+			configure.Invoke(this.contentSecurityPolicyBuilder);
+
+			return this;
+		}
+
+		/// <summary>Configures the "x-content-type-options" header value.</summary>
+		/// <param name="configure">The configuration action.</param>
+		/// <returns>The <see cref="SecurityHeaderPolicyBuilder"/>.</returns>
+		/// <exception cref="ArgumentNullException"><paramref name="configure"/> is <see langword="null"/>.</exception>
+		public SecurityHeaderPolicyBuilder ContentTypeOptions(Action<ContentTypeOptionsBuilder> configure)
+		{
+			if (configure == null)
+			{
+				throw new ArgumentNullException(nameof(configure));
+			}
+
+			this.contentTypeOptionsBuilder = new ContentTypeOptionsBuilder();
+
+			configure.Invoke(this.contentTypeOptionsBuilder);
+
+			return this;
 		}
 
 		/// <summary>Configures the "x-frame-options" header value.</summary>
@@ -74,18 +114,35 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders
 
 		internal SecurityHeaderPolicy Build()
 		{
-			var policies = new List<(string, string)>
-			{
-				("content-security-policy", "default-src 'self';frame-ancestors 'none';object-src 'none'"),
-				("x-content-type-options", "nosniff"),
-				("x-frame-options", this.frameOptionsBuilder.Build()),
-				("referrer-policy", this.referrerPolicyBuilder.Build())
-			};
+			var policies = new List<(string, string)>();
 
-			var secureOnlyPolicies = new List<(string, string)>
+			if (this.contentSecurityPolicyBuilder.Enabled)
 			{
-				("strict-transport-security", this.strictTransportSecurityBuilder.Build())
-			};
+				policies.Add(
+					("content-security-policy", "default-src 'self';frame-ancestors 'none';object-src 'none'"));
+			}
+
+			if (this.contentTypeOptionsBuilder.Enabled)
+			{
+				policies.Add(("x-content-type-options", "nosniff"));
+			}
+
+			if (this.frameOptionsBuilder.Enabled)
+			{
+				policies.Add(("x-frame-options", this.frameOptionsBuilder.Build()));
+			}
+
+			if (this.referrerPolicyBuilder.Enabled)
+			{
+				policies.Add(("referrer-policy", this.referrerPolicyBuilder.Build()));
+			}
+
+			var secureOnlyPolicies = new List<(string, string)>();
+
+			if (this.strictTransportSecurityBuilder.Enabled)
+			{
+				secureOnlyPolicies.Add(("strict-transport-security", this.strictTransportSecurityBuilder.Build()));
+			}
 
 			return new SecurityHeaderPolicy(policies.ToArray(), secureOnlyPolicies.ToArray());
 		}

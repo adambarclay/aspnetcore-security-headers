@@ -5,13 +5,33 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 	public static class The_SecurityHeaderPolicyBuilder_Is_Returned
 	{
 		[Fact]
+		public static void By_ContentSecurityPolicy()
+		{
+			SecurityHeaderPolicyBuilder builder = null!;
+
+			TestHarness.Test(app => app.UseSecurityHeaders(o => builder = o));
+
+			Assert.Same(builder, builder.ContentSecurityPolicy(o => { }));
+		}
+
+		[Fact]
+		public static void By_ContentTypeOptions()
+		{
+			SecurityHeaderPolicyBuilder builder = null!;
+
+			TestHarness.Test(app => app.UseSecurityHeaders(o => builder = o));
+
+			Assert.Same(builder, builder.ContentTypeOptions(o => { }));
+		}
+
+		[Fact]
 		public static void By_FrameOptions()
 		{
 			SecurityHeaderPolicyBuilder builder = null!;
 
 			TestHarness.Test(app => app.UseSecurityHeaders(o => builder = o));
 
-			Assert.Same(builder, builder.FrameOptions(x => { }));
+			Assert.Same(builder, builder.FrameOptions(o => { }));
 		}
 
 		[Fact]
@@ -21,7 +41,7 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 
 			TestHarness.Test(app => app.UseSecurityHeaders(o => builder = o));
 
-			Assert.Same(builder, builder.ReferrerPolicy(x => { }));
+			Assert.Same(builder, builder.ReferrerPolicy(o => { }));
 		}
 
 		[Fact]
@@ -31,7 +51,7 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 
 			TestHarness.Test(app => app.UseSecurityHeaders(o => builder = o));
 
-			Assert.Same(builder, builder.StrictTransportSecurity(x => { }));
+			Assert.Same(builder, builder.StrictTransportSecurity(o => { }));
 		}
 	}
 }
