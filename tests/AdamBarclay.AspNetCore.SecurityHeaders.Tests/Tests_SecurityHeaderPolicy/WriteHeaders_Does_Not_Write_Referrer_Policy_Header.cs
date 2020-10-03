@@ -9,7 +9,7 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 		public static async Task When_The_Header_Is_Disabled()
 		{
 			var headers =
-				await TestHarness.TestHttp(app => app.UseSecurityHeaders(o => o.ReferrerPolicy(x => x.Disable())));
+				await TestHarness.Test(app => app.UseSecurityHeaders(o => o.ReferrerPolicy(x => x.Disable())));
 
 			Assert.Empty(headers["referrer-policy"]);
 		}

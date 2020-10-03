@@ -8,8 +8,7 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 		[Fact]
 		public static async Task When_The_Header_Is_Disabled()
 		{
-			var headers =
-				await TestHarness.TestHttp(app => app.UseSecurityHeaders(o => o.FrameOptions(x => x.Disable())));
+			var headers = await TestHarness.Test(app => app.UseSecurityHeaders(o => o.FrameOptions(x => x.Disable())));
 
 			Assert.Empty(headers["x-frame-options"]);
 		}

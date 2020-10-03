@@ -8,17 +8,7 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests
 {
 	internal static class TestHarness
 	{
-		internal static Task<IHeaderDictionary> Test(Action<IApplicationBuilder> configure)
-		{
-			return TestHarness.InternalTest(configure, true);
-		}
-
-		internal static Task<IHeaderDictionary> TestHttp(Action<IApplicationBuilder> configure)
-		{
-			return TestHarness.InternalTest(configure, false);
-		}
-
-		private static async Task<IHeaderDictionary> InternalTest(Action<IApplicationBuilder> configure, bool useHttps)
+		internal static async Task<IHeaderDictionary> Test(Action<IApplicationBuilder> configure)
 		{
 			Func<Task> onStarting = () => Task.CompletedTask;
 
@@ -26,8 +16,8 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests
 
 			var contextMock = new Mock<HttpContext>(MockBehavior.Strict);
 
-			contextMock.Setup(o => o.Request.IsHttps).Returns(useHttps);
 			contextMock.Setup(o => o.Response.Headers).Returns(headers);
+
 			contextMock.Setup(o => o.Response.OnStarting(It.IsAny<Func<object, Task>>(), It.IsAny<object>()))
 				.Callback<Func<object, Task>, object>((callback, state) => onStarting = () => callback(state));
 

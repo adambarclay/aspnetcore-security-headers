@@ -8,7 +8,7 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 		[Fact]
 		public static async Task When_The_Header_Is_Disabled()
 		{
-			var headers = await TestHarness.TestHttp(
+			var headers = await TestHarness.Test(
 				app => app.UseSecurityHeaders(o => o.ContentTypeOptions(x => x.Disable())));
 
 			Assert.Empty(headers["x-content-type-options"]);
