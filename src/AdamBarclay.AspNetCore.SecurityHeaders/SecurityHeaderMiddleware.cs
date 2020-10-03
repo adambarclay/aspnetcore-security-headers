@@ -46,7 +46,7 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders
 			{
 				var context = (HttpContext)state;
 
-				securityHeaderPolicy.WriteHeaders(context.Response.Headers, context.Request.IsHttps);
+				securityHeaderPolicy.WriteHeaders(context.Response.Headers);
 
 				return Task.CompletedTask;
 			};

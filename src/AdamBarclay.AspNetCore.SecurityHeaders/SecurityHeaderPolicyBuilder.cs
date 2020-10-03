@@ -137,14 +137,12 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders
 				policies.Add(("referrer-policy", this.referrerPolicyBuilder.Build()));
 			}
 
-			var secureOnlyPolicies = new List<(string, string)>();
-
 			if (this.strictTransportSecurityBuilder.Enabled)
 			{
-				secureOnlyPolicies.Add(("strict-transport-security", this.strictTransportSecurityBuilder.Build()));
+				policies.Add(("strict-transport-security", this.strictTransportSecurityBuilder.Build()));
 			}
 
-			return new SecurityHeaderPolicy(policies.ToArray(), secureOnlyPolicies.ToArray());
+			return new SecurityHeaderPolicy(policies.ToArray());
 		}
 	}
 }
