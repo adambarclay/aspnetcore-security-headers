@@ -8,3 +8,4 @@ artifacts/
 *.user
 .DS_Store
 ._*
+launchSettings.json

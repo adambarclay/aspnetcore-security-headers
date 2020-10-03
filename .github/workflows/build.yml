@@ -6,21 +6,23 @@ on:
     tags-ignore:
       - '*.*'
     paths-ignore:
-      - README.md
+      - 'README.md'
+      - 'docs/**'
   pull_request:
     branches:
       - main
     tags-ignore:
       - '*.*'
     paths-ignore:
-      - README.md
+      - 'README.md'
+      - 'docs/**'
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Latest Code
       uses: actions/checkout@v2
-    - name: Setup .NET Core
+    - name: Setup .NET Core 3.1
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '3.1.x'
