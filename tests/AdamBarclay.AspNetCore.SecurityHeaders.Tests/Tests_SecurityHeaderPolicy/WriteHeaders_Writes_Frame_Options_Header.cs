@@ -1,8 +1,10 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolicy
 {
+	[ExcludeFromCodeCoverage]
 	public static class WriteHeaders_Writes_Frame_Options_Header
 	{
 		[Fact]

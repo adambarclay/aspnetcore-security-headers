@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -6,6 +7,7 @@ using Moq;
 
 namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests
 {
+	[ExcludeFromCodeCoverage]
 	internal static class TestHarness
 	{
 		internal static async Task<IHeaderDictionary> Test(Action<IApplicationBuilder> configure)
@@ -21,7 +23,7 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests
 			contextMock.Setup(o => o.Response.OnStarting(It.IsAny<Func<object, Task>>(), It.IsAny<object>()))
 				.Callback<Func<object, Task>, object>((callback, state) => onStarting = () => callback(state));
 
-			var app = new ApplicationBuilder(null);
+			var app = new ApplicationBuilder(null!);
 
 			configure.Invoke(app);
 

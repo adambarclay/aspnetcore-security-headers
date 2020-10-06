@@ -6,7 +6,6 @@
 		<Authors>Adam Barclay</Authors>
 		<Description>Adds security headers to the ASP.NET Core pipeline.</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<Platforms>AnyCPU</Platforms>
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/adambarclay/aspnetcore-security-headers</RepositoryUrl>
 	</PropertyGroup>
@@ -14,7 +13,7 @@
 		<FrameworkReference Include="Microsoft.AspNetCore.App"/>
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0">
+		<PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
