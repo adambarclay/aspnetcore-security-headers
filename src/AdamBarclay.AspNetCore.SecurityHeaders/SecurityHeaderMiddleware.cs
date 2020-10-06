@@ -14,7 +14,12 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders
 		/// <exception cref="ArgumentNullException"><paramref name="applicationBuilder"/> is <see langword="null"/>.</exception>
 		public static IApplicationBuilder UseSecurityHeaders(this IApplicationBuilder applicationBuilder)
 		{
-			return applicationBuilder.UseSecurityHeaders(o => { });
+			if (applicationBuilder == null)
+			{
+				throw new ArgumentNullException(nameof(applicationBuilder));
+			}
+
+			return SecurityHeaderMiddleware.BuildPolicy(applicationBuilder, new SecurityHeaderPolicyBuilder());
 		}
 
 		/// <summary>Adds the security headers to the ASP.NET Core pipeline.</summary>
@@ -40,13 +45,18 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders
 
 			configure.Invoke(securityHeaderPolicyBuilder);
 
+			return SecurityHeaderMiddleware.BuildPolicy(applicationBuilder, securityHeaderPolicyBuilder);
+		}
+
+		private static IApplicationBuilder BuildPolicy(
+			IApplicationBuilder applicationBuilder,
+			SecurityHeaderPolicyBuilder securityHeaderPolicyBuilder)
+		{
 			var securityHeaderPolicy = securityHeaderPolicyBuilder.Build();
 
 			Func<object, Task> onStartingCallback = state =>
 			{
-				var context = (HttpContext)state;
-
-				securityHeaderPolicy.WriteHeaders(context.Response.Headers);
+				securityHeaderPolicy.SetHeaders(((HttpContext)state).Response.Headers);
 
 				return Task.CompletedTask;
 			};

@@ -7,7 +7,13 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders
 	{
 		internal static ContentSecurityPolicyBuilder DefaultContentSecurityPolicy()
 		{
-			return new ContentSecurityPolicyBuilder();
+			var contentSecurityPolicyBuilder = new ContentSecurityPolicyBuilder();
+
+			contentSecurityPolicyBuilder.ConfigureDirective("default-src").Self();
+			contentSecurityPolicyBuilder.ConfigureDirective("object-src").None();
+			contentSecurityPolicyBuilder.ConfigureDirective("frame-ancestors").None();
+
+			return contentSecurityPolicyBuilder;
 		}
 
 		internal static ContentTypeOptionsBuilder DefaultContentTypeOptions()

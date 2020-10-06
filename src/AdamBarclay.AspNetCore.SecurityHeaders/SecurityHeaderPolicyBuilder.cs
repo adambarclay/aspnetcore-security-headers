@@ -118,8 +118,7 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders
 
 			if (this.contentSecurityPolicyBuilder.Enabled)
 			{
-				policies.Add(
-					("content-security-policy", "default-src 'self';frame-ancestors 'none';object-src 'none'"));
+				policies.Add(("content-security-policy", this.contentSecurityPolicyBuilder.Build()));
 			}
 
 			if (this.contentTypeOptionsBuilder.Enabled)

@@ -14,7 +14,7 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders
 			this.policies = policies;
 		}
 
-		internal void WriteHeaders(IHeaderDictionary headers)
+		internal void SetHeaders(IHeaderDictionary headers)
 		{
 			Debug.Assert(headers != null);
 

@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Xunit;
 
 namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderMiddleware
 {
+	[ExcludeFromCodeCoverage]
 	public static class UseSecurityHeaders_Calls_The_Next_Module_In_The_Pipeline
 	{
 		[Fact]

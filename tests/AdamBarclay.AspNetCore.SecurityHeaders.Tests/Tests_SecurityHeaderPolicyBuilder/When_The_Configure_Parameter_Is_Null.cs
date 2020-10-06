@@ -1,9 +1,11 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Xunit;
 
 namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolicyBuilder
 {
+	[ExcludeFromCodeCoverage]
 	public static class When_The_Configure_Parameter_Is_Null
 	{
 		[Fact]

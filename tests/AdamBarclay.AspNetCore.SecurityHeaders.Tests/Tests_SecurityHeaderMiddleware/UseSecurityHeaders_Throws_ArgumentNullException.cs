@@ -1,9 +1,11 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.AspNetCore.Builder;
 using Xunit;
 
 namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderMiddleware
 {
+	[ExcludeFromCodeCoverage]
 	public static class UseSecurityHeaders_Throws_ArgumentNullException
 	{
 		[Fact]
@@ -15,7 +17,7 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderMiddl
 		[Fact]
 		public static void When_The_SecurityHeaderPolicyBuilder_Parameter_Is_Null()
 		{
-			Assert.ThrowsAny<ArgumentNullException>(() => new ApplicationBuilder(null).UseSecurityHeaders(null!));
+			Assert.ThrowsAny<ArgumentNullException>(() => new ApplicationBuilder(null!).UseSecurityHeaders(null!));
 		}
 
 		[Fact]
