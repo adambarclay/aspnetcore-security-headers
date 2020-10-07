@@ -20,6 +20,27 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.PolicyBuilders
 
 		internal bool Enabled { get; private set; }
 
+		/// <summary>Configures the "child-src" directive.</summary>
+		/// <returns>The <see cref="ValueBuilder"/>.</returns>
+		public ValueBuilder ConfigureChild()
+		{
+			return this.ConfigureDirective("child-src");
+		}
+
+		/// <summary>Configures the "connect-src" directive.</summary>
+		/// <returns>The <see cref="ValueBuilder"/>.</returns>
+		public ValueBuilder ConfigureConnect()
+		{
+			return this.ConfigureDirective("connect-src");
+		}
+
+		/// <summary>Configures the "default-src" directive.</summary>
+		/// <returns>The <see cref="ValueBuilder"/>.</returns>
+		public ValueBuilder ConfigureDefault()
+		{
+			return this.ConfigureDirective("default-src");
+		}
+
 		/// <summary>Configures a content security policy directive.</summary>
 		/// <param name="name">The name of the fetch directive e.g. "default-src".</param>
 		/// <returns>The <see cref="ValueBuilder"/>.</returns>
@@ -36,6 +57,104 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.PolicyBuilders
 			this.directives[name] = builder;
 
 			return builder;
+		}
+
+		/// <summary>Configures the "font-src" directive.</summary>
+		/// <returns>The <see cref="ValueBuilder"/>.</returns>
+		public ValueBuilder ConfigureFont()
+		{
+			return this.ConfigureDirective("font-src");
+		}
+
+		/// <summary>Configures the "frame-src" directive.</summary>
+		/// <returns>The <see cref="ValueBuilder"/>.</returns>
+		public ValueBuilder ConfigureFrame()
+		{
+			return this.ConfigureDirective("frame-src");
+		}
+
+		/// <summary>Configures the "img-src" directive.</summary>
+		/// <returns>The <see cref="ValueBuilder"/>.</returns>
+		public ValueBuilder ConfigureImage()
+		{
+			return this.ConfigureDirective("img-src");
+		}
+
+		/// <summary>Configures the "manifest-src" directive.</summary>
+		/// <returns>The <see cref="ValueBuilder"/>.</returns>
+		public ValueBuilder ConfigureManifest()
+		{
+			return this.ConfigureDirective("manifest-src");
+		}
+
+		/// <summary>Configures the "media-src" directive.</summary>
+		/// <returns>The <see cref="ValueBuilder"/>.</returns>
+		public ValueBuilder ConfigureMedia()
+		{
+			return this.ConfigureDirective("media-src");
+		}
+
+		/// <summary>Configures the "object-src" directive.</summary>
+		/// <returns>The <see cref="ValueBuilder"/>.</returns>
+		public ValueBuilder ConfigureObject()
+		{
+			return this.ConfigureDirective("object-src");
+		}
+
+		/// <summary>Configures the "prefetch-src" directive.</summary>
+		/// <returns>The <see cref="ValueBuilder"/>.</returns>
+		public ValueBuilder ConfigurePrefetch()
+		{
+			return this.ConfigureDirective("prefetch-src");
+		}
+
+		/// <summary>Configures the "script-src" directive.</summary>
+		/// <returns>The <see cref="ValueBuilder"/>.</returns>
+		public ValueBuilder ConfigureScript()
+		{
+			return this.ConfigureDirective("script-src");
+		}
+
+		/// <summary>Configures the "script-src-attr" directive.</summary>
+		/// <returns>The <see cref="ValueBuilder"/>.</returns>
+		public ValueBuilder ConfigureScriptInAttributes()
+		{
+			return this.ConfigureDirective("script-src-attr");
+		}
+
+		/// <summary>Configures the "script-src-elem" directive.</summary>
+		/// <returns>The <see cref="ValueBuilder"/>.</returns>
+		public ValueBuilder ConfigureScriptInElements()
+		{
+			return this.ConfigureDirective("script-src-elem");
+		}
+
+		/// <summary>Configures the "style-src" directive.</summary>
+		/// <returns>The <see cref="ValueBuilder"/>.</returns>
+		public ValueBuilder ConfigureStyle()
+		{
+			return this.ConfigureDirective("style-src");
+		}
+
+		/// <summary>Configures the "style-src-attr" directive.</summary>
+		/// <returns>The <see cref="ValueBuilder"/>.</returns>
+		public ValueBuilder ConfigureStyleInAttributes()
+		{
+			return this.ConfigureDirective("style-src-attr");
+		}
+
+		/// <summary>Configures the "style-src-elem" directive.</summary>
+		/// <returns>The <see cref="ValueBuilder"/>.</returns>
+		public ValueBuilder ConfigureStyleInElements()
+		{
+			return this.ConfigureDirective("style-src-elem");
+		}
+
+		/// <summary>Configures the "worker-src" directive.</summary>
+		/// <returns>The <see cref="ValueBuilder"/>.</returns>
+		public ValueBuilder ConfigureWorker()
+		{
+			return this.ConfigureDirective("worker-src");
 		}
 
 		/// <summary>Disables the "content-security-policy" header.</summary>
