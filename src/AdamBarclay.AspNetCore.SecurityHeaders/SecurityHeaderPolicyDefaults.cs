@@ -9,8 +9,8 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders
 		{
 			var contentSecurityPolicyBuilder = new ContentSecurityPolicyBuilder();
 
-			contentSecurityPolicyBuilder.ConfigureDirective("default-src").Self();
-			contentSecurityPolicyBuilder.ConfigureDirective("object-src").None();
+			contentSecurityPolicyBuilder.ConfigureDefault().Self();
+			contentSecurityPolicyBuilder.ConfigureObject().None();
 			contentSecurityPolicyBuilder.ConfigureDirective("frame-ancestors").None();
 
 			return contentSecurityPolicyBuilder;

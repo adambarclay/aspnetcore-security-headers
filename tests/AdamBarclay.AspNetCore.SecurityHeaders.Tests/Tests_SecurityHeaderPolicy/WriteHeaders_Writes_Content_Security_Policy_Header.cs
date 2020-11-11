@@ -69,7 +69,10 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 				{ unsafeEval, "'unsafe-eval'" },
 				{ unsafeHashes, "'unsafe-hashes'" },
 				{ unsafeInline, "'unsafe-inline'" },
-				{ uriScheme, uriSchemeValue }
+				{ uriScheme, uriSchemeValue },
+				{ "default-src", "'self'" },
+				{ "frame-ancestors", "'none'" },
+				{ "object-src", "'none'" }
 			};
 
 			Assert.Equal(
