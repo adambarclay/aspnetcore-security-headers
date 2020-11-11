@@ -33,7 +33,7 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders
 				throw new ArgumentNullException(nameof(configure));
 			}
 
-			this.contentSecurityPolicyBuilder = new ContentSecurityPolicyBuilder();
+			this.contentSecurityPolicyBuilder = SecurityHeaderPolicyDefaults.DefaultContentSecurityPolicy();
 
 			configure.Invoke(this.contentSecurityPolicyBuilder);
 

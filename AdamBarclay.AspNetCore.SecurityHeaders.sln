@@ -5,11 +5,12 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdamBarclay.AspNetCore.SecurityHeaders", "src\AdamBarclay.AspNetCore.SecurityHeaders\AdamBarclay.AspNetCore.SecurityHeaders.csproj", "{8D5D2548-45C9-4EF6-82CF-17144F4CBAC3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4ED8903E-A126-49B6-80D8-889D735FA4A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdamBarclay.AspNetCore.SecurityHeaders.Tests", "tests\AdamBarclay.AspNetCore.SecurityHeaders.Tests\AdamBarclay.AspNetCore.SecurityHeaders.Tests.csproj", "{5C1D50F7-4EFF-419B-9233-447997BBFF6A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{525B09CE-6255-4324-9ED2-CD54CF2A5C87}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdamBarclay.AspNetCore.SecurityHeaders.Tests", "tests\AdamBarclay.AspNetCore.SecurityHeaders.Tests\AdamBarclay.AspNetCore.SecurityHeaders.Tests.csproj", "{5C1D50F7-4EFF-419B-9233-447997BBFF6A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{87A18614-7C45-45A9-8A60-B8D99F44DD60}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,10 +29,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{8D5D2548-45C9-4EF6-82CF-17144F4CBAC3} = {4ED8903E-A126-49B6-80D8-889D735FA4A2}
-		{5C1D50F7-4EFF-419B-9233-447997BBFF6A} = {525B09CE-6255-4324-9ED2-CD54CF2A5C87}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CE77BDB6-DB88-4301-A261-B68927023B92}
