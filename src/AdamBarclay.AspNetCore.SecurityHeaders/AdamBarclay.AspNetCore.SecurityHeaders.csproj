@@ -4,10 +4,15 @@
 	</PropertyGroup>
 	<PropertyGroup>
 		<Authors>Adam Barclay</Authors>
+		<Copyright>Copyright © Adam Barclay 2020</Copyright>
 		<Description>Adds security headers to the ASP.NET pipeline.</Description>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<IncludeSymbols>true</IncludeSymbols>
+		<Owners>Adam Barclay</Owners>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<RepositoryType>git</RepositoryType>
-		<RepositoryUrl>https://github.com/adambarclay/aspnetcore-security-headers</RepositoryUrl>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<Title>ASP.NET Core Security Headers</Title>
 	</PropertyGroup>
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App"/>
@@ -17,7 +22,8 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.164">
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+		<PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.261">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
