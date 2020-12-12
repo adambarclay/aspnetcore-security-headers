@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,7 +28,7 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 		[Fact]
 		public static async Task With_IncludeSubdomains_And_Preload_When_Configured()
 		{
-			var maxAge = new Random().Next();
+			var maxAge = RandomNumberGenerator.GetInt32(0, int.MaxValue);
 
 			var headers = await TestHarness.Test(
 				app => app.UseSecurityHeaders(
@@ -40,7 +41,7 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 		[Fact]
 		public static async Task With_IncludeSubdomains_When_Configured()
 		{
-			var maxAge = new Random().Next();
+			var maxAge = RandomNumberGenerator.GetInt32(0, int.MaxValue);
 
 			var headers = await TestHarness.Test(
 				app => app.UseSecurityHeaders(
@@ -52,7 +53,7 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 		[Fact]
 		public static async Task With_Max_Age_Set_To_The_Configured_Value()
 		{
-			var maxAge = new Random().Next();
+			var maxAge = RandomNumberGenerator.GetInt32(0, int.MaxValue);
 
 			var headers = await TestHarness.Test(
 				app => app.UseSecurityHeaders(
@@ -64,7 +65,7 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests.Tests_SecurityHeaderPolic
 		[Fact]
 		public static async Task With_Preload_And_Without_IncludeSubdomains_When_Configured()
 		{
-			var maxAge = new Random().Next();
+			var maxAge = RandomNumberGenerator.GetInt32(0, int.MaxValue);
 
 			var headers = await TestHarness.Test(
 				app => app.UseSecurityHeaders(
