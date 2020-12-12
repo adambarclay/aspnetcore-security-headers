@@ -18,9 +18,9 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests
 
 			var contextMock = new Mock<HttpContext>(MockBehavior.Strict);
 
-			contextMock.Setup(o => o.Response.Headers).Returns(headers);
+			contextMock.Setup(o => o.Response.Headers)!.Returns(headers);
 
-			contextMock.Setup(o => o.Response.OnStarting(It.IsAny<Func<object, Task>>(), It.IsAny<object>()))
+			contextMock.Setup(o => o.Response.OnStarting(It.IsAny<Func<object, Task>>()!, It.IsAny<object>()!))!
 				.Callback<Func<object, Task>, object>((callback, state) => onStarting = () => callback(state));
 
 			var app = new ApplicationBuilder(null!);
@@ -29,7 +29,7 @@ namespace AdamBarclay.AspNetCore.SecurityHeaders.Tests
 
 			app.Run(async context => await onStarting.Invoke());
 
-			await app.Build().Invoke(contextMock.Object);
+			await app.Build().Invoke(contextMock.Object!);
 
 			return headers;
 		}
