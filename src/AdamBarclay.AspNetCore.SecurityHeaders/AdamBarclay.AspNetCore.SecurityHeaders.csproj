@@ -4,12 +4,13 @@
 	</PropertyGroup>
 	<PropertyGroup>
 		<Authors>Adam Barclay</Authors>
-		<Copyright>Copyright © Adam Barclay 2020</Copyright>
+		<Copyright>Copyright © Adam Barclay</Copyright>
 		<Description>Adds security headers to the ASP.NET pipeline.</Description>
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 		<IncludeSymbols>true</IncludeSymbols>
 		<Owners>Adam Barclay</Owners>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<ProjectUrl>https://github.com/adambarclay/aspnetcore-security-headers</ProjectUrl>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Title>ASP.NET Core Security Headers</Title>
